@@ -78,7 +78,7 @@ def blockConverter(matrix):
         for k in range(0, a, n): #counter for columns of sudoku matrix
             region[i] = matrix[j:j+n, k:k+n] #slice sudoku matrix into regions eg.region[2] = matrix[0:2, 6:9]
             i += 1
-    return region  #return region matrix        
+    return region #return region matrix        
 
 #################################################################################
 #                                                                               #

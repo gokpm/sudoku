@@ -10,8 +10,7 @@ if __name__ == '__main__':
         sudoku = genSudoku(3)
         puzzle = genPuzzle(sudoku, 25)
         solved = solveSudoku(puzzle)
-        print(z, conformityCheck(sudoku))
-        print(z, conformityCheck(solved))
+        print(z, conformityCheck(sudoku), conformityCheck(solved))
         z += 1
 
         
