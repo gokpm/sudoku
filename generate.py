@@ -33,50 +33,48 @@ from utils import *
 #################################################################################
 
 @stopWatch
-def genSudoku(block_size):
-    n = block_size
-    a = int(n**2)
-    numbers = list(np.arange(a) + 1)
-    matrix = np.zeros((a,a), dtype = np.uint8)
-    index_block = np.arange(a).reshape(-1, n)
-    block = blockConverter(matrix)
-    i = 0
+def genSudoku(block_size): #region size
+    n = block_size #region size
+    a = int(n**2) #size of the sudoku matrix
+    numbers = list(np.arange(a) + 1) #allowed numbers
+    matrix = np.zeros((a,a), dtype = np.uint8) #init sudoku matrix
+    index_block = np.arange(a).reshape(-1, n) #init index matrix
+    block = blockConverter(matrix) #convert sudoku matrix into region matrix
+    i = 0 #sudoku row counter
     while i < a:
-        shuffle(numbers)
-        index = indexFinder(index_block, i, 0)
-        counter = 0
-        while (((numbers[0] in block[index,:i%n]) or (numbers[0] in matrix[:i,0])) and counter < a):
-            numbers.append(numbers.pop(0))
+        shuffle(numbers) #shuffle allowed numbers for a random behaviour
+        index = indexFinder(index_block, i, 0) #find the index of the region matrix
+        counter = 0 #counter to check the number of element displacements from front to back
+        while (((numbers[0] in block[index,:i%n]) or (numbers[0] in matrix[:i,0])) and counter < a): #move elements to the back if these condtions are satisfied
+            numbers.append(numbers.pop(0)) #move the first element to the last
             counter += 1
-        if counter == a:
-            i = (i//n)*n
-            matrix[i:, :] = 0
-            continue
-        #print(block[index,:i%n])
-        #print(i, numbers, "\n")    
-        permutations_numbers = permutations(numbers)
-        for sequence in permutations_numbers:
-            matrix[i] = sequence
-            block = blockConverter(matrix)
-            count_duplicate = 0
-            for j in range(0,a):
-                temporary = matrix[i,j]
+        if counter == a: #if number of displacement equals the number of elements, then all elements have been tried and no element is remaining
+            i = (i//n)*n #there is no solution for this row, so back track to the first row of this block
+            matrix[i:, :] = 0 #starting from the block's first row, make everything 0
+            continue #again fill values from the block's first row    
+        permutations_numbers = permutations(numbers) #permutate the allowed numbers
+        for sequence in permutations_numbers: #get one sequence at a time (lazily)
+            matrix[i] = sequence #fill the row with the sequence
+            block = blockConverter(matrix) #convert the sudoku into regions
+            count_duplicate = 0 #counter to check for duplicates
+            for j in range(0,a): #sudoku column counter
+                temporary = matrix[i,j] #store matrix[i,j] in temporary, so that it doesn't duplicate itself while comparing in it's row, column and region
                 matrix[i,j] = 0
-                block = blockConverter(matrix)
-                index = indexFinder(index_block, i, j)
-                if ((temporary in block[index]) or (temporary in matrix[:, j])):
-                    count_duplicate += 1
+                block = blockConverter(matrix) #convert the sudoku into regions after making the element under view as 0
+                index = indexFinder(index_block, i, j) #get the index of the region matrix
+                if ((temporary in block[index]) or (temporary in matrix[:, j])): #apply rules of sudoku
+                    count_duplicate += 1 #increment if duplicates are found in region or column. the same number will not be repeated in the row since all elements in the sequence are unique
                 matrix[i,j] = temporary
                 temporary = None
-                block = blockConverter(matrix)
-            if count_duplicate == 0:
-                break
-        if count_duplicate > 0:
-            i = (i//n)*n
-            matrix[i:, :] = 0
-            continue
+                block = blockConverter(matrix) #redefine the regions after reinstating the element into the matrix
+            if count_duplicate == 0: #if no duplicates are found in the row after entering a sequence
+                break #do not go to the next sequence
+        if count_duplicate > 0: #even after trying all the sequences, if duplicates are found
+            i = (i//n)*n #there is no solution to this row. so back track to the block's first row
+            matrix[i:, :] = 0 #from the block's first row, make everything 0
+            continue #continue filling the sequence from the block's first row
         i += 1
-    return matrix
+    return matrix #return the sudoku matrix
 
 #################################################################################
 #                                                                               #
@@ -90,25 +88,25 @@ def genSudoku(block_size):
 #                                                                               #
 #################################################################################
 
-def genPuzzle(arg_matrix, min_clues):
-    matrix = np.copy(arg_matrix)
-    a, n = dimMatrix(matrix)
-    remaining_clues = int(a**2)
-    cache = []
-    while remaining_clues > min_clues:
-        i = choice(list(np.arange(a)))
-        j = choice(list(np.arange(a)))
-        x0 = list(matrix[i,:]).count(0)
-        y0 = list(matrix[:,j]).count(0)
-        if not [i,j] in cache:
-            if x0 > 7 or y0 > 7:
-                cache.append([i,j])
-                continue
-            else:
-                matrix[i,j] = 0
-                remaining_clues -= 1
-                cache.append([i,j])
-    return matrix
+def genPuzzle(arg_matrix, min_clues): #completed sudoku matrix and the min number of elements to retain
+    matrix = np.copy(arg_matrix) #work with a copy
+    a, n = dimMatrix(matrix) #validate the sudoku matrix for dimensions
+    remaining_clues = int(a**2) #counter to track the number of clues remaining
+    cache = [] #list to store already removed elements. already removed element should not be removed again. will result in more clues than the minimum number of clues
+    while remaining_clues > min_clues: #stop when only min no. of clues are remaining
+        i = choice(list(np.arange(a))) #choose a random x value
+        j = choice(list(np.arange(a))) #choose a random y value
+        x0 = list(matrix[i,:]).count(0) #count the 0's in the row
+        y0 = list(matrix[:,j]).count(0) #count the 0's in the column
+        if not [i,j] in cache: #if not already seen
+            if x0 > 7 or y0 > 7: #if no. of 0's in rows or columns is greater than 7
+                cache.append([i,j]) #add the location as visited
+                continue #next iteration
+            else: #if no. of 0's in rows or columns is less than 7
+                matrix[i,j] = 0 #remove the clue
+                remaining_clues -= 1 #decrement the remaining clues since a clue was removed
+                cache.append([i,j]) #add the location as visited
+    return matrix #return the puzzle
     
 #################################################################################
 #                                                                               #
