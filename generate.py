@@ -4,6 +4,7 @@ from random import shuffle
 from random import choice
 from utils import *
 
+@stopWatch
 def genSudoku(block_size):
     n = block_size
     a = int(n**2)

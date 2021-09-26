@@ -3,6 +3,7 @@ from itertools import permutations
 from random import shuffle
 from utils import *
 
+@stopWatch
 def solveSudoku(arg_matrix):
     matrix = np.copy(arg_matrix)
     a, n = dimMatrix(matrix)
