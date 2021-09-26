@@ -98,7 +98,7 @@ def genPuzzle(arg_matrix, min_clues): #completed sudoku matrix and the min numbe
         x0 = list(matrix[i,:]).count(0) #count the 0's in the row
         y0 = list(matrix[:,j]).count(0) #count the 0's in the column
         if not [i,j] in cache: #if not already seen
-            if x0 > 7 or y0 > 7: #if no. of 0's in rows or columns is greater than 7
+            if x0 > a-2 or y0 > a-2: #if no. of 0's in rows or columns is greater than 7
                 cache.append([i,j]) #add the location as visited
                 continue #next iteration
             else: #if no. of 0's in rows or columns is less than 7
