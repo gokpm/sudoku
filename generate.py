@@ -39,9 +39,9 @@ def genSudoku(block_size): #region size
     numbers = list(np.arange(a) + 1) #allowed numbers
     matrix = np.zeros((a,a), dtype = np.uint8) #init sudoku matrix
     index_block = np.arange(a).reshape(-1, n) #init index matrix
-    block = blockConverter(matrix) #convert sudoku matrix into region matrix
     i = 0 #sudoku row counter
     while i < a:
+        block = blockConverter(matrix) #convert sudoku matrix into region matrix
         shuffle(numbers) #shuffle allowed numbers for a random behaviour
         index = indexFinder(index_block, i, 0) #find the index of the region matrix
         counter = 0 #counter to check the number of element displacements from front to back
@@ -66,7 +66,6 @@ def genSudoku(block_size): #region size
                     count_duplicate += 1 #increment if duplicates are found in region or column. the same number will not be repeated in the row since all elements in the sequence are unique
                 matrix[i,j] = temporary
                 temporary = None
-                block = blockConverter(matrix) #redefine the regions after reinstating the element into the matrix
             if count_duplicate == 0: #if no duplicates are found in the row after entering a sequence
                 break #do not go to the next sequence
         if count_duplicate > 0: #even after trying all the sequences, if duplicates are found

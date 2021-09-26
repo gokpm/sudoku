@@ -57,7 +57,6 @@ def solveSudoku(arg_matrix): #puzzle matrix
                     if ((temporary in block[index]) or (temporary in copy_matrix[:, j]) or (temporary in copy_matrix[i, :])): #apply the rules of sudoku. check if the element under view is already present in it's row, column or region
                         count_duplicate += 1 #increment the duplicate counter
                     copy_matrix[i,j] = temporary #reinstate the value into the matrix
-                    block = blockConverter(copy_matrix) #divide into regions once the element has been reinstated
                     temporary = None
                     k += 1 #go to the next element in the sequence
             if count_duplicate > 0: #if duplicates are found

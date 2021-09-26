@@ -8,7 +8,9 @@ if __name__ == '__main__':
     z = 1
     while z<101:
         sudoku = genSudoku(3)
-        print(z, conformityCheck(sudoku))
+        puzzle = genPuzzle(sudoku, 25)
+        solved = solveSudoku(puzzle)
+        print(z, conformityCheck(sudoku), conformityCheck(solved))
         z += 1
 
         
