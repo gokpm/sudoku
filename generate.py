@@ -20,7 +20,7 @@ def genSudoku(block_size):
             numbers.append(numbers.pop(0))
             counter += 1
         if counter == a:
-            i = n - 1
+            i = (i//n)*n
             matrix[i:, :] = 0
             continue
         #print(block[index,:i%n])
@@ -43,7 +43,7 @@ def genSudoku(block_size):
             if count_duplicate == 0:
                 break
         if count_duplicate > 0:
-            i = n - 1
+            i = (i//n)*n
             matrix[i:, :] = 0
             continue
         i += 1

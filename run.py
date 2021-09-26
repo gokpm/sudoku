@@ -5,10 +5,12 @@ from utils import *
 np.set_printoptions(threshold=np.inf)
                                             
 if __name__ == '__main__':
-    sudoku = genSudoku(3)
-    puzzle = genPuzzle(sudoku, 60)
-    solved_puzzle = solveSudoku(puzzle)
-    print(solved_puzzle)
+    z = 1
+    while z<101:
+        sudoku = genSudoku(3)
+        print(z, conformityCheck(sudoku))
+        z += 1
+
         
         
         
