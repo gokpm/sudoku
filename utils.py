@@ -34,8 +34,4 @@ def indexFinder(matrix, x, y):  # Index matrix and coordinates of sudoku matrix.
     a = matrix.shape[0]
     b = matrix.shape[1]
     i = matrix[int(x/a), int(y/b)]  # Get the corresponding row value of the region matrix.
-    return i
-
-       
-        
-        
+    return i   
