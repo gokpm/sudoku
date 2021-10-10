@@ -1,9 +1,15 @@
 import numpy as np
+from time import sleep
 from tkinter import *
 from generate import *
 from solve import *
+from check import *
+
+def validate_right_click(event):
+    button_validate.config(text = 'Validate', bg = '#f0f0f0')
 
 def clean():
+    button_validate.config(text = 'Validate', bg = '#f0f0f0')
     i = 0
     while i < 9:
         j = 0
@@ -51,9 +57,27 @@ def solve_sudoku():
             element[i][j].insert(0, matrix[i,j])
             j += 1
         i += 1
+    return
 
 def validate_sudoku():
-    pass
+    matrix = np.zeros((9,9), dtype = np.uint8)
+    i = 0
+    while i < 9:
+        j = 0
+        while j < 9:
+            try:
+                matrix[i,j] = element[i][j].get()
+                element[i][j].config(state=DISABLED)
+            except ValueError:
+                matrix[i,j] = 0
+            j += 1
+        i += 1
+    flag = conformityCheck(matrix)
+    if flag:
+        button_validate.config(text = 'True', bg = '#00ff00')
+    else:
+        button_validate.config(text = 'False', bg = '#ff0000')
+    return
 
 root = Tk()
 root.title('Sudoku')
@@ -85,6 +109,8 @@ button_validate = Button(root,
                          width = 10, height = 2, bd = 3,
                          activebackground = '#000000', activeforeground = '#ffffff',
                          command = validate_sudoku)
+
+button_validate.bind("<Button-3>", validate_right_click)
 
 button_clear = Button(root,
                       text = 'Clear',
