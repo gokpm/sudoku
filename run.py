@@ -1,18 +1,9 @@
-#################################################################################
-#                                                                               #
-#                                    start                                      #  
-#                                                                               #
-#################################################################################
-
 import numpy as np
 from time import sleep
 from tkinter import *
 from generate import *
 from solve import *
 from check import *
-
-def validate_right_click(event):
-    button_validate.config(text = 'Validate', bg = '#f0f0f0')
 
 def clean():
     button_validate.config(text = 'Validate', bg = '#f0f0f0')
@@ -85,6 +76,10 @@ def validate_sudoku():
         button_validate.config(text = 'False', bg = '#ff0000')
     return
 
+def validate_right_click(event):
+    button_validate.config(text = 'Validate', bg = '#f0f0f0')
+    return
+
 root = Tk()
 root.title('Sudoku')
 
@@ -123,6 +118,7 @@ button_clear = Button(root,
                       width = 10, height = 3, bd = 3,
                       activebackground = '#000000', activeforeground = '#ffffff',
                       command = clean)
+
 # Placement of buttons.
 button_generate.grid(row = 0, column = 10, rowspan = 2)
 button_solve.grid(row = 2, column = 10, rowspan = 2)
@@ -130,9 +126,3 @@ button_validate.grid(row = 4, column = 10, rowspan = 2)
 button_clear.grid(row = 6, column = 10, rowspan = 3)
 
 root.mainloop()
-
-#################################################################################
-#                                                                               #
-#                                     end                                       #  
-#                                                                               #
-################################################################################# 

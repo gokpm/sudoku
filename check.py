@@ -1,32 +1,5 @@
-#################################################################################
-#                                                                               #
-#                                    start                                      #  
-#                                                                               #
-#################################################################################
-
-#################################################################################
-#                                                                               #
-#   category:       script                                                      #
-#   title:          sudoku matrix checker                                       #  
-#   description:    check if a matrix follows all the rules of a sudoku matrix  #
-#   modified on:    26-09-2021                                                  #
-#   contributed by: @icemelting                                                 #
-#                                                                               #
-#################################################################################
-
 import numpy as np
 from utils import *
-
-#################################################################################
-#                                                                               #
-#   category:     function                                                      #
-#   title:        sudoku matrix checker                                         #  
-#   description:  check if a matrix follows all the rules of a sudoku matrix    #
-#   arguments:    matrix to be checked                                          #
-#   returns:      Boolean                                                       #
-#   modified on:  26-09-2021                                                    #
-#                                                                               #
-#################################################################################
 
 def conformityCheck(arg_matrix):
     matrix = np.copy(arg_matrix)
@@ -47,12 +20,6 @@ def conformityCheck(arg_matrix):
         return False
     else:
         return True
-        
-#################################################################################
-#                                                                               #
-#                                     end                                       #  
-#                                                                               #
-################################################################################# 
 
         
         

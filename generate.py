@@ -1,36 +1,8 @@
-#################################################################################
-#                                                                               #
-#                                    start                                      #  
-#                                                                               #
-#################################################################################
-
-#################################################################################
-#                                                                               #
-#   category:       script                                                      #
-#   title:          generate                                                    #  
-#   description:    generates sudoku and puzzle matrix                          #
-#   modified on:    26-09-2021                                                  #
-#   contributed by: @icemelting                                                 #
-#                                                                               #
-#################################################################################
-
 import numpy as np
 from itertools import permutations
 from random import shuffle
 from random import choice
 from utils import *
-
-#################################################################################
-#                                                                               #
-#   category:     function                                                      #
-#   title:        generate sudoku                                               #  
-#   description:  generate a random sudoku matrix by permutation of allowed     #
-#                 numbers                                                       #
-#   arguments:    region size                                                   #
-#   returns:      sudoku matrix                                                 #
-#   modified on:  26-09-2021                                                    #
-#                                                                               #
-#################################################################################
 
 @stopWatch
 def genSudoku(block_size):
@@ -75,18 +47,6 @@ def genSudoku(block_size):
         i += 1
     return matrix
 
-#################################################################################
-#                                                                               #
-#   category:     function                                                      #
-#   title:        generate puzzle                                               #  
-#   description:  remove random elements from a sudoku matrix to generate a     #
-#                 puzzle                                                        #
-#   arguments:    sudoku matrix                                                 #
-#   returns:      puzzle matrix                                                 #
-#   modified on:  26-09-2021                                                    #
-#                                                                               #
-#################################################################################
-
 def genPuzzle(arg_matrix, min_clues):
     matrix = np.copy(arg_matrix)
     a, n = dimMatrix(matrix)
@@ -105,12 +65,3 @@ def genPuzzle(arg_matrix, min_clues):
                 remaining_clues -= 1
             cache.append([i,j])
     return matrix
-    
-#################################################################################
-#                                                                               #
-#                                     end                                       #  
-#                                                                               #
-################################################################################# 
-        
-        
-        

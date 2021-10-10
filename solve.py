@@ -1,34 +1,7 @@
-#################################################################################
-#                                                                               #
-#                                    start                                      #  
-#                                                                               #
-#################################################################################
-
-#################################################################################
-#                                                                               #
-#   category:       script                                                      #
-#   title:          solve sudoku                                                #  
-#   description:    solve sudoku using permutation of allowed numbers           #
-#   modified on:    26-09-2021                                                  #
-#   contributed by: @icemelting                                                 #
-#                                                                               #
-#################################################################################
-
 import numpy as np
 from itertools import permutations
 from random import shuffle
 from utils import *
-
-#################################################################################
-#                                                                               #
-#   category:     function                                                      #
-#   title:        solve sudoku                                                  #  
-#   description:  solve sudoku using permutation of allowed numbers             #
-#   arguments:    puzzle matrix                                                 #
-#   returns:      solved sudoku matrix                                          #
-#   modified on:  26-09-2021                                                    #
-#                                                                               #
-#################################################################################
 
 @stopWatch
 def solveSudoku(arg_matrix):
@@ -70,12 +43,6 @@ def solveSudoku(arg_matrix):
             continue  # Start from the first row.
         i += 1
     return copy_matrix
-    
-#################################################################################
-#                                                                               #
-#                                     end                                       #  
-#                                                                               #
-#################################################################################
 
         
         
