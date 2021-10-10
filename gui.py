@@ -1,6 +1,7 @@
+import numpy as np
 from tkinter import *
 from generate import *
-import numpy as np
+from solve import *
 
 def clean():
     i = 0
@@ -15,7 +16,7 @@ def clean():
 
 def generate_sudoku():
     clean()
-    matrix = np.copy(genPuzzle(genSudoku(3), 17))
+    matrix = np.copy(genPuzzle(genSudoku(3), 75))
     i = 0
     while i < 9:
         j = 0
@@ -27,10 +28,29 @@ def generate_sudoku():
                 pass            
             j += 1
         i += 1
-    pass
+    return
 
 def solve_sudoku():
-    pass
+    matrix = np.zeros((9,9), dtype = np.uint8)
+    i = 0
+    while i < 9:
+        j = 0
+        while j < 9:
+            try:
+                matrix[i,j] = element[i][j].get()
+                element[i][j].config(state=DISABLED)
+            except ValueError:
+                matrix[i,j] = 0
+            j += 1
+        i += 1
+    matrix = np.copy(solveSudoku(matrix))
+    i = 0
+    while i < 9:
+        j = 0
+        while j < 9:
+            element[i][j].insert(0, matrix[i,j])
+            j += 1
+        i += 1
 
 def validate_sudoku():
     pass
